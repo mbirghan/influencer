@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-declare var FB: any;
+import { DataService } from './data.service';
 
 @Component({
   selector: 'app-root',
@@ -8,67 +8,79 @@ declare var FB: any;
 })
 export class AppComponent {
   title = 'frontend';
-  igId = '';
-  media = [];
+  loggedIn = false;
+  userInfo = {};
+  pictureUrl = "../assets/martin-adams-pTCcJSBOTxY-unsplash.jpg";
+  name = "";
+  username = "";
+  followerCount = "";
+  followingCount = "";
 
-  constructor(private ref: ChangeDetectorRef) { }
+  graphs;
 
-  ngOnInit(): void {
-    (window as any).fbAsyncInit = function () {
-      FB.init({
-        appId: '876129052872524',
-        cookie: true,
-        xfbml: true,
-        version: 'v1.0'
-      });
-      FB.AppEvents.logPageView();
-    };
-
-    (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) { return; }
-      js = d.createElement(s); js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+  login() {
+    this.dataService.login();
   }
 
-  submitLogin() {
-    console.log("submit login to facebook");
-    // FB.login();
-    FB.login((response) => {
-      console.log('submitLogin', response);
-      if (response.authResponse) {
-        //login success
-        //login success code here
-        //redirect to home page
-        console.log("login success");
-        console.log(response.authResponse.accessToken);
-        this.getIgId()
-      }
-      else {
-        console.log('User login failed');
-      }
-    });
-
+  logout() {
+    this.dataService.logout();
   }
 
-  getIgId() {
-    FB.api('/me/accounts', (response) => {
-      FB.api('/' + response.data[0].id, { fields: 'instagram_business_account' }, (response) => {
-        this.igId = response.instagram_business_account.id;
+  changeLogin(userInfo) {
+    this.loggedIn = true;
+    this.pictureUrl = userInfo.profile_picture_url;
+    this.name = userInfo.name;
+    this.username = userInfo.username;
+    this.followerCount = userInfo.followers_count;
+    this.followingCount = userInfo.follows_count;
+    this.ref.detectChanges();
+  }
+
+  constructor(private ref: ChangeDetectorRef,
+    private dataService: DataService) {
+    this.dataService.loginStatus.subscribe((status) => {
+      this.loggedIn = status === "connected";
+      this.dataService.getUserInfo().subscribe((userInfo) => {
+        this.userInfo = userInfo;
+        this.pictureUrl = userInfo.profile_picture_url;
+        this.name = userInfo.name;
+        this.username = userInfo.username;
+        this.followerCount = userInfo.followers_count;
+        this.followingCount = userInfo.follows_count;
         this.ref.detectChanges();
-        this.getMedia();
       });
     });
+
+
+  this.graphs = {
+    // "audience_city": {},
+    // "audience_country": {},
+    // "audience_gender_age": {},
+    // "audience_locale": {},
+    "email_contacts": this.dataService.getEmailContacts.bind(this.dataService),
+    "follower_count": this.dataService.getFollowerCount.bind(this.dataService),
+    "get_directions_clicks": this.dataService.getDirectionsClicks.bind(this.dataService),
+    "impressions": this.dataService.getImpressions.bind(this.dataService),
+    "online_followers": this.dataService.getOnlineFollowers.bind(this.dataService),
+    "phone_call_clicks": this.dataService.getPhoneCallClicks.bind(this.dataService),
+    "profile_views": this.dataService.getProfileViews.bind(this.dataService),
+    "reach": this.dataService.getReach.bind(this.dataService),
+    "text_message_clicks": this.dataService.getTextMessageClicks.bind(this.dataService),
+    "website_clicks": this.dataService.getWebsiteClicks.bind(this.dataService),
+  };
   }
 
-  getMedia() {
-    if(this.igId === '') return;
+  testFollowerCount() {
+    let c = 0;
+    this.dataService.getMedia().subscribe((response) => {
+      c += 1;
+      console.log(c);
 
-    FB.api('/' + this.igId + '/media', {limit: 0}, (response) => {
-      this.media = response.data.map(x => x.id);
-      this.ref.detectChanges();
-    })
+    });
+    // this.dataService.getWebsiteClicks(1589537264);
+  }
+
+  isLoggedIn() {
+    return this.dataService.isLoggedIn();
   }
 }

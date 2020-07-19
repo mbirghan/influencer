@@ -1,0 +1,4 @@
+<mat-card>
+  <h1>{{ metric }}</h1>
+  <div *ngIf="chartOption" echarts [options]="chartOption"  [merge]="chartOption" class="demo-chart"></div>
+</mat-card>

@@ -1,0 +1,13 @@
+mat-grid-tile {
+  background: grey;
+}
+
+.center-cropped {
+  width: 150px;
+  height: 150px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+}
+
+.main {  width: 900px;  margin-left: auto;  margin-right: auto;  text-align: center; }

@@ -1,3 +1,32 @@
-<h1 *ngIf="media.length > 0">This shit works!</h1>
-<p *ngFor="let id of media">{{ id }}</p>
-<button (click)="submitLogin()">Login</button>
+<div class="main">
+
+  
+  
+  <div *ngIf="!loggedIn; then thenBlock else elseBlock"></div>
+  <ng-template #thenBlock><button (click)="login()">login</button></ng-template>
+  
+  
+  <ng-template #elseBlock>
+    <mat-grid-list gutterSize="0px" cols="4" rowHeight="200" >
+      <mat-grid-tile [rowspan] = "1" [colspan] = "1">
+        <img class="center-cropped" src="{{ pictureUrl }}" />
+      </mat-grid-tile>
+      <mat-grid-tile [rowspan] = "1" [colspan] = "3">
+        <h1>{{ name }}</h1>
+        <br/>
+        <h2>{{ username }}</h2>
+        <br/>
+        <p>Followers: {{ followerCount }}</p> <p>Following: {{ followingCount }}</p><br>
+        
+      </mat-grid-tile>
+    </mat-grid-list>  
+    
+    
+    <app-graph-card *ngFor="let k of graphs | keyvalue" [metric]="k.key" [function]="k.value"></app-graph-card>
+    
+    <button (click)="testFollowerCount()" >test</button>
+    
+    
+  </ng-template>
+  
+</div>
