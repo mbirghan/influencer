@@ -22,7 +22,9 @@
     </mat-grid-list>  
     
     
-    <app-graph-card *ngFor="let k of graphs | keyvalue" [metric]="k.key" [function]="k.value"></app-graph-card>
+    <!-- <app-graph-card *ngFor="let k of graphs | keyvalue" [metric]="k.key" [function]="k.value"></app-graph-card> -->
+
+    <app-follower-card></app-follower-card>
     
     <button (click)="testFollowerCount()" >test</button>
     

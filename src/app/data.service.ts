@@ -213,9 +213,25 @@ export class DataService {
     return this._insightsHelper("email_contacts", since);
   }
 
-  getFollowerCount(since = (Math.floor(Date.now() / 1000) - (3600 * 24 * 30) + 1)): Observable<any> {
+  getFollowerCountByDay(since = (Math.floor(Date.now() / 1000) - (3600 * 24 * 30) + 1)): Observable<any> {
     // day
     return this._insightsHelper("follower_count", since);
+  }
+
+  getFollowerCount(since = (Math.floor(Date.now() / 1000) - (3600 * 24 * 30) + 1)): Observable<any> {
+    return combineLatest(this.getFollowerCountByDay(since), this.getUserInfo(), (followerCount, userInfo) => {
+      let res = {}
+      let count = userInfo.followers_count;
+      let last = '';
+      Object.keys(followerCount).sort().reverse().forEach((key) => {
+        res[key] = count;
+        count -= followerCount[key];
+        if(followerCount[key] !== 0) last = key;
+      });
+      console.log(last);
+      
+      return res;
+    })
   }
 
   getDirectionsClicks(since = (Math.floor(Date.now() / 1000) - (3600 * 24 * 30) + 1)): Observable<any> {
@@ -274,6 +290,11 @@ export class DataService {
       let calls = 0;
       let returns = 0;
       let allCalled = false;
+
+      if(this._igId === '') {
+        console.error("IgId not ready yet!");
+        observer.complete();
+      }
 
       while (maxUntil < until) {
         maxUntil = maxUntil + maxSpan;

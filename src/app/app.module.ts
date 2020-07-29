@@ -15,6 +15,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion'
 import { HereMapComponent } from './here-map/here-map.component';
 import { GraphCardComponent } from './graph-card/graph-card.component'
 
@@ -28,6 +29,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import * as echarts from 'echarts';
 import { LoginscreenComponent } from './loginscreen/loginscreen.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { FollowerCardComponent } from './follower-card/follower-card.component';
 
 
 @NgModule({
@@ -36,7 +38,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     HereMapComponent,
     GraphCardComponent,
     LoginscreenComponent,
-    DashboardComponent
+    DashboardComponent,
+    FollowerCardComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +55,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MatListModule,
     MatGridListModule,
     MatTabsModule,
+    MatExpansionModule,
     NgxEchartsModule.forRoot({ echarts })
   ],
   bootstrap: [AppComponent]

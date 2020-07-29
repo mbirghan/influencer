@@ -12,15 +12,13 @@ export class GraphCardComponent implements OnInit {
   @Input() metric;
   @Input() function;
 
-
-
   chartOption: EChartOption;
 
   constructor(private ref: ChangeDetectorRef, private ds: DataService) {
   }
 
   ngOnInit(): void {
-    this.function().subscribe((data) => {
+    this.function(1529055264).subscribe((data) => {
       let dataPoints = [];
 
       Object.keys(data).sort().map((x) => {
@@ -50,29 +48,34 @@ export class GraphCardComponent implements OnInit {
   }
 
   testFollowerCount() {
-    this.ds.getProfileViews(1529057264).subscribe((data) => {
-      let dataPoints = [];
+    this.ds.getFollowerCountByDay(1121525901).subscribe((data) => {
+      // let dataPoints = [];
 
-      Object.keys(data).sort().map((x) => {
-        dataPoints.push(data[x]);
-      });
+      // Object.keys(data).sort().map((x) => {
+      //   dataPoints.push(data[x]);
+      // });
 
-      this.chartOption = {
-        xAxis: {
-          type: 'category',
-          data: Object.keys(data).sort(),
-        },
-        yAxis: {
-          type: 'value',
-        },
-        series: [
-          {
-            data: dataPoints,
-            type: 'line',
-          },
-        ],
-      };
-
+      // this.chartOption = {
+      //   xAxis: {
+      //     type: 'category',
+      //     data: Object.keys(data).sort(),
+      //   },
+      //   yAxis: {
+      //     type: 'value',
+      //   },
+      //   series: [
+      //     {
+      //       data: dataPoints,
+      //       type: 'line',
+      //     },
+      //   ],
+      // };
+      let i = 0
+      for(let k in data) {
+        i += data[k];
+      }
+      console.log(i);
+      
       this.ref.detectChanges();
     },
     (err) => console.error(err),
