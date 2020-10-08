@@ -3,7 +3,10 @@
   
   
   <div *ngIf="!loggedIn; then thenBlock else elseBlock"></div>
-  <ng-template #thenBlock><button (click)="login()">login</button></ng-template>
+  <ng-template #thenBlock>
+    <!-- <div style="top: 30%" (click)="login()" class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width=""></div> -->
+    <button (click)="login()">login</button>
+  </ng-template>
   
   
   <ng-template #elseBlock>
@@ -12,21 +15,19 @@
         <img class="center-cropped" src="{{ pictureUrl }}" />
       </mat-grid-tile>
       <mat-grid-tile [rowspan] = "1" [colspan] = "3">
-        <h1>{{ name }}</h1>
-        <br/>
-        <h2>{{ username }}</h2>
-        <br/>
-        <p>Followers: {{ followerCount }}</p> <p>Following: {{ followingCount }}</p><br>
+        <mat-list>
+          <mat-list-item> <h1>{{ name }}</h1> </mat-list-item>
+          <mat-list-item> <h2>{{ username }}</h2> </mat-list-item>
+          <mat-list-item> <p>Followers: {{ followerCount }}     Following: {{ followingCount }}</p> </mat-list-item>
+         </mat-list>
         
       </mat-grid-tile>
     </mat-grid-list>  
     
     
-    <!-- <app-graph-card *ngFor="let k of graphs | keyvalue" [metric]="k.key" [function]="k.value"></app-graph-card> -->
 
     <app-follower-card></app-follower-card>
-    
-    <button (click)="testFollowerCount()" >test</button>
+    <app-online-card></app-online-card>
     
     
   </ng-template>

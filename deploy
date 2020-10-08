@@ -1,0 +1,9 @@
+#!/bin/bash
+
+current_time=$(date "+%Y.%m.%d-%H.%M.%S")
+
+ng build --prod --baseHref="https://mbirghan.github.io/influencer/"
+
+git add .
+git commit -m "build and deploy on $current_time"
+git push -u origin master

@@ -16,30 +16,32 @@ import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion'
-import { HereMapComponent } from './here-map/here-map.component';
-import { GraphCardComponent } from './graph-card/graph-card.component'
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { NgxEchartsModule } from 'ngx-echarts';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { ChartsModule } from 'ng2-charts';
  
-/**
- * This will import all modules from echarts.
- * If you only need custom modules,
- * please refer to [Custom Build] section.
- */
-import * as echarts from 'echarts';
+// /**
+//  * This will import all modules from echarts.
+//  * If you only need custom modules,
+//  * please refer to [Custom Build] section.
+//  */
+// import * as echarts from 'echarts';
 import { LoginscreenComponent } from './loginscreen/loginscreen.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { FollowerCardComponent } from './follower-card/follower-card.component';
+import { EngagementCardComponent } from './engagement-card/engagement-card.component';
+import { OnlineCardComponent } from './online-card/online-card.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HereMapComponent,
-    GraphCardComponent,
     LoginscreenComponent,
-    DashboardComponent,
-    FollowerCardComponent
+    FollowerCardComponent,
+    EngagementCardComponent,
+    OnlineCardComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +58,10 @@ import { FollowerCardComponent } from './follower-card/follower-card.component';
     MatGridListModule,
     MatTabsModule,
     MatExpansionModule,
-    NgxEchartsModule.forRoot({ echarts })
+    MatButtonToggleModule,
+    // NgxEchartsModule.forRoot({ echarts }),
+    NgbModule,
+    ChartsModule,
   ],
   bootstrap: [AppComponent]
 })

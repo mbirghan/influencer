@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HereMapComponent } from './here-map.component';
+import { EngagementCardComponent } from './engagement-card.component';
 
-describe('HereMapComponent', () => {
-  let component: HereMapComponent;
-  let fixture: ComponentFixture<HereMapComponent>;
+describe('EngagementCardComponent', () => {
+  let component: EngagementCardComponent;
+  let fixture: ComponentFixture<EngagementCardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HereMapComponent ]
+      declarations: [ EngagementCardComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HereMapComponent);
+    fixture = TestBed.createComponent(EngagementCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

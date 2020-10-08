@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { DataService } from './data.service';
 
 @Component({
@@ -10,7 +10,7 @@ export class AppComponent {
   title = 'frontend';
   loggedIn = false;
   userInfo = {};
-  pictureUrl = "../assets/martin-adams-pTCcJSBOTxY-unsplash.jpg";
+  pictureUrl = "";
   name = "";
   username = "";
   followerCount = "";
@@ -33,21 +33,21 @@ export class AppComponent {
     this.username = userInfo.username;
     this.followerCount = userInfo.followers_count;
     this.followingCount = userInfo.follows_count;
-    this.ref.detectChanges();
   }
 
-  constructor(private ref: ChangeDetectorRef,
+  constructor(private ngZone: NgZone,
     private dataService: DataService) {
     this.dataService.loginStatus.subscribe((status) => {
       this.loggedIn = status === "connected";
       this.dataService.getUserInfo().subscribe((userInfo) => {
-        this.userInfo = userInfo;
-        this.pictureUrl = userInfo.profile_picture_url;
-        this.name = userInfo.name;
-        this.username = userInfo.username;
-        this.followerCount = userInfo.followers_count;
-        this.followingCount = userInfo.follows_count;
-        this.ref.detectChanges();
+        this.ngZone.run( () => {
+          this.userInfo = userInfo;
+          this.pictureUrl = userInfo.profile_picture_url;
+          this.name = userInfo.name;
+          this.username = userInfo.username;
+          this.followerCount = userInfo.followers_count;
+          this.followingCount = userInfo.follows_count;
+        });
       });
     });
 

@@ -2,12 +2,13 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { DataService } from '../data.service';
 
+
 @Component({
-  selector: 'app-follower-card',
-  templateUrl: './follower-card.component.html',
-  styleUrls: ['./follower-card.component.scss']
+  selector: 'app-engagement-card',
+  templateUrl: './engagement-card.component.html',
+  styleUrls: ['./engagement-card.component.scss']
 })
-export class FollowerCardComponent implements OnInit {
+export class EngagementCardComponent implements OnInit {
 
   rawData = {};
   startDate = (Math.floor(Date.now() / 1000) - (3600 * 24 * 30) + 1);
@@ -24,7 +25,7 @@ export class FollowerCardComponent implements OnInit {
           radius: 0,
         },
         line: {
-            // tension: 0,
+            tension: 0,
             fill: false,
         }
       },
